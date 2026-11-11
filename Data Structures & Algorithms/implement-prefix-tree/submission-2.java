@@ -1,0 +1,45 @@
+public class TrieNode {
+    TrieNode[] children = new TrieNode[26];
+    boolean isCompletedWord = false;
+}
+
+class PrefixTree {
+    TrieNode root;
+    public PrefixTree() {
+        root = new TrieNode();
+    }
+
+    public void insert(String word) {
+        TrieNode curr = root;
+        for (char ch : word.toCharArray()) {
+            int i=ch-'a';
+            if(curr.children[i] ==null) curr.children[i]=new TrieNode();
+            curr = curr.children[i];
+        }
+
+        curr.isCompletedWord = true;
+    }
+
+    public boolean search(String word) {
+        TrieNode curr = root;
+        for (char ch : word.toCharArray()) {
+            int i=ch-'a';
+            if (curr.children[i]==null)
+                return false;
+            curr = curr.children[i];
+        }
+        return curr.isCompletedWord;
+    }
+
+    public boolean startsWith(String prefix) {
+        TrieNode curr = root;
+        for (char ch : prefix.toCharArray()) {
+            int i=ch-'a';
+            if (curr.children[i]==null) {
+                return false;
+            }
+            curr = curr.children[i];
+        }
+        return true;
+    }
+}
